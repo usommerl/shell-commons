@@ -1,0 +1,23 @@
+# custom commonads
+alias newalias="$EDITOR ~/.bash/aliases"
+alias matlab="/home/uwe/.bin/matlab/bin/matlab -nosplash -nodesktop"
+
+# modified commands
+alias diff='colordiff'              # requires colordiff package
+alias grep='grep --color=auto'
+alias df='df -h'
+alias du='du -c -h'
+alias mkdir='mkdir -p -v'
+alias ping='ping -c 5'
+alias ..='cd ..'
+alias h='history'
+alias t='htop'
+
+
+#ls
+alias ls='ls -hF --color=auto'
+alias l='ls -l'
+alias ll='ls -la'
+alias lx='ll -BX'       # sort by extension
+alias lz='ll -rS'       # sort by size
+alias lt='ll -rt'       # sort by date
