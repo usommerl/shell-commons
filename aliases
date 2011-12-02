@@ -1,6 +1,7 @@
 # custom commonads
 alias newalias="$EDITOR ~/.bash/aliases"
 alias matlab="/home/uwe/.bin/matlab/bin/matlab -nosplash -nodesktop"
+alias vsftp="sudo /etc/rc.d/vsftpd"
 
 # modified commands
 alias diff='colordiff'              # requires colordiff package
