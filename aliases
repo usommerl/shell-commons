@@ -2,6 +2,10 @@
 alias newalias="$EDITOR ~/.bash/aliases"
 alias matlab="/home/uwe/.bin/matlab/bin/matlab -nosplash -nodesktop"
 alias vsftp="sudo /etc/rc.d/vsftpd"
+alias halt="sudo halt"
+alias reboot="sudo reboot"
+alias shutdown="sudo shutdown"
+
 
 # modified commands
 alias diff='colordiff'              # requires colordiff package
