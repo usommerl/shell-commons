@@ -1,4 +1,6 @@
-# custom commonads
+#!/bin/bash
+
+# custom commands
 alias newalias="$EDITOR ~/.bash/aliases"
 alias matlab="/home/uwe/.bin/matlab/bin/matlab -nosplash -nodesktop"
 alias vsftp="sudo /etc/rc.d/vsftpd"
@@ -6,11 +8,20 @@ alias halt="sudo halt"
 alias reboot="sudo reboot"
 alias shutdown="sudo shutdown"
 
+# git
+alias gst="git status --short"
+alias gc="git commit"
+alias ga="git add"
+alias gl="git log --stat"
+alias gpl="git pull"
+alias gps="git push"
+
 
 # modified commands
 alias diff='colordiff'              # requires colordiff package
 alias grep='grep --color=auto'
-alias df='df -h'
+alias more='less'
+alias df='df -h -x tmpfs -x devtmpfs -x rootfs'
 alias du='du -c -h'
 alias mkdir='mkdir -p -v'
 alias ping='ping -c 5'
