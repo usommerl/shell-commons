@@ -7,6 +7,7 @@ alias vsftp="sudo /etc/rc.d/vsftpd"
 alias halt="sudo halt"
 alias reboot="sudo reboot"
 alias shutdown="sudo shutdown"
+alias rdsktp="rdesktop -g 1356x718 -k de -P -z -x l -r sound:off"
 
 # git
 alias gst="git status --short"
@@ -31,7 +32,7 @@ alias t='htop'
 
 
 #ls
-alias ls='ls -hF --color=auto'
+alias ls='ls -hF --group-directories-first --color=auto'
 alias l='ls -l'
 alias ll='ls -la'
 alias lx='ll -BX'       # sort by extension
