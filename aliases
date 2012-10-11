@@ -2,12 +2,8 @@
 
 # custom commands
 alias newalias="$EDITOR ~/.bash/aliases"
-alias matlab="/home/uwe/.bin/matlab/bin/matlab -nosplash -nodesktop"
-alias vsftp="sudo /etc/rc.d/vsftpd"
-alias halt="sudo halt"
-alias reboot="sudo reboot"
-alias shutdown="sudo shutdown"
-alias rdsktp="rdesktop -g 1356x718 -k de -P -z -x l -r sound:off"
+alias matlab="/opt/matlab/bin/matlab -nosplash -nodesktop"
+alias rdsktp="rdesktop -g 100% -PKD -k de -z -x l -r sound:off"
 
 # git
 alias gst="git status --short"
@@ -16,7 +12,6 @@ alias ga="git add"
 alias gl="git log --stat"
 alias gpl="git pull"
 alias gps="git push"
-
 
 # modified commands
 alias diff='colordiff'              # requires colordiff package
@@ -28,8 +23,6 @@ alias mkdir='mkdir -p -v'
 alias ping='ping -c 5'
 alias ..='cd ..'
 alias h='history'
-alias t='htop'
-
 
 #ls
 alias ls='ls -hF --group-directories-first --color=auto'
