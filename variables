@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Variables
+export GIT_EDITOR=vim
+export EDITOR=vim
+export LESS=-iR
+export DART_SDK=/opt/dart/dart-sdk/
+export RUBY_GEM_EXECUTABLES=$HOME/.gem/ruby/1.9.1/bin
+
+# Path
+export PATH="$DART_SDK/bin/:$RUBY_GEM_EXECUTABLES:$PATH"
+
