@@ -18,6 +18,7 @@ alias diff='colordiff'              # requires colordiff package
 alias grep='grep --color=auto'
 alias more='less'
 alias df='df -h -x tmpfs -x devtmpfs -x rootfs'
+alias di='di -ss -x tmpfs,run'
 alias du='du -c -h'
 alias mkdir='mkdir -p -v'
 alias ping='ping -c 5'
