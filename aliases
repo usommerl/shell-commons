@@ -10,10 +10,12 @@ alias gst="git status --short"
 alias gc="git commit"
 alias ga="git add"
 alias gl="git log --stat"
+alias gll="git log --pretty=format:'%h%x09%an%x09%ad%x09%s'"
 alias gpl="git pull"
 alias gps="git push"
 
 # modified commands
+alias pacman='pacman-color'
 alias diff='colordiff'              # requires colordiff package
 alias grep='grep --color=auto'
 alias more='less'
