@@ -34,3 +34,6 @@ alias ll='ls -la'
 alias lx='ll -BX'       # sort by extension
 alias lz='ll -rS'       # sort by size
 alias lt='ll -rt'       # sort by date
+
+#misc
+alias e1000eBugWorkaround='sudo sh -c "echo on > /sys/bus/pci/devices/0000\:00\:19.0/power/control"'
