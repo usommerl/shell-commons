@@ -15,7 +15,6 @@ alias gpl="git pull"
 alias gps="git push"
 
 # modified commands
-alias pacman='pacman-color'
 alias diff='colordiff'              # requires colordiff package
 alias grep='grep --color=auto'
 alias more='less'
