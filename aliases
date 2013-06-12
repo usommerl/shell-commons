@@ -2,15 +2,17 @@
 
 # custom commands
 alias newalias="$EDITOR ~/.bash/aliases"
-alias matlab="/opt/matlab/bin/matlab -nosplash -nodesktop"
 alias rdsktp="rdesktop -g 100% -PKD -k de -z -x l -r sound:off"
+alias alsaeq="alsamixer -D equal"
+# reset urxvt terminal
+alias cls="echo -ne '\033c'"
 
 # git
 alias gst="git status --short"
 alias gc="git commit"
 alias ga="git add"
 alias gl="git log --stat"
-alias gll="git log --pretty=format:'%h%x09%an%x09%ad%x09%s'"
+alias gll="git --no-pager log --pretty=format:'%h%x09%an%x09%ad%x09%s'"
 alias gpl="git pull"
 alias gps="git push"
 
