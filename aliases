@@ -12,7 +12,7 @@ alias gst="git status --short"
 alias gc="git commit"
 alias ga="git add"
 alias gl="git log --stat"
-alias gll="git --no-pager log --pretty=format:'%h%x09%an%x09%ad%x09%s'"
+alias gll="git --no-pager log --pretty=tformat:'%H%x09%an%x09%ai%x09%s'"
 alias gpl="git pull"
 alias gps="git push"
 
@@ -35,6 +35,15 @@ alias ll='ls -la'
 alias lx='ll -BX'       # sort by extension
 alias lz='ll -rS'       # sort by size
 alias lt='ll -rt'       # sort by date
+
+function ListHelper() {
+    result=$(ls $2 --color=always $1 | egrep $3 --color=never '^d' | egrep -v '^total')
+    if [[ -n $result ]]; then echo $result; fi
+}
+function ldir()  { ListHelper "$1" '-l' } 
+function lldir() { ListHelper "$1" '-la' } 
+function lf()    { ListHelper "$1" '-l' '-v' }
+function llf()   { ListHelper "$1" '-la' '-v' }
 
 #misc
 alias e1000eBugWorkaround='sudo sh -c "echo on > /sys/bus/pci/devices/0000\:00\:19.0/power/control"'
