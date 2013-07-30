@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # custom commands
 alias newalias="$EDITOR ~/.bash/aliases"
 alias rdsktp="rdesktop -g 100% -PKD -k de -z -x l -r sound:off"
@@ -47,3 +45,5 @@ function llf()   { ListHelper "$1" '-la' '-v' }
 
 #misc
 alias e1000eBugWorkaround='sudo sh -c "echo on > /sys/bus/pci/devices/0000\:00\:19.0/power/control"'
+
+# vim: set filetype=sh:
