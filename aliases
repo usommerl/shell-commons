@@ -9,7 +9,7 @@ alias gst="git status --short"
 alias gc="git commit"
 alias ga="git add"
 alias gl="git log --stat"
-alias gll="git --no-pager log --pretty=tformat:'%H%x09%an%x09%ai%x09%s'"
+alias gll="git --no-pager log --pretty=tformat:'%h %ad %s (%an)' --date=short"
 alias gpl="git pull"
 alias gps="git push"
 
