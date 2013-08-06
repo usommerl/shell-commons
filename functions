@@ -1,7 +1,7 @@
 function _listHelper() {
     result=$(ls -hF --group-directories-first $2 --color=always $1 \
              | egrep $3 --color=never '^d' | egrep -v '^total')
-    if [[ -n $result ]]; then echo $result; fi
+    if [ -n "$result" ]; then echo "$result"; fi
 }
 
 function ldir() { 

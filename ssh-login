@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+SSH_ENV=$HOME/.ssh/environment
+
+function ssh_clean {
+    local d="$HOME/.ssh"
+    local n="known_hosts"
+    local f0="$d/$n"
+    local f1="$d/${n}_tmp"
+
+    if [ -f $f0 ]; then
+        cat /dev/null > $f1
+
+        while read host line; do
+            if [ $host != "localhost" ]; then
+                echo $host $line >> $f1
+            fi
+        done < $f0
+
+        mv $f1 $f0
+
+        chmod 644 $f0
+    fi
+}
+
+
+# Initialize new agent and add authentication
+function start_agent {
+
+    echo "Initialising new SSH agent on $HOSTNAME  on $(date)" >> ~/.ssh/agent
+
+    # Start authenticating daemon
+    # No authentications set up yet, just starting daemon!
+    ssh-agent | head -2 > ${SSH_ENV}
+    chmod 600 ${SSH_ENV}
+
+    # Find SSH_AUTH_SOCK and SSH_AGENT_PID of the available daemon
+    . ${SSH_ENV} > /dev/null
+
+    # Add authentication to this and only this daemon
+    for file in $HOME/.ssh/*.pub; do 
+        ssh-add "$(dirname $file)/$(basename $file .pub)"
+    done
+    # Clear terminal screen
+    clear 
+}
+
+
+if [ -f "$SSH_ENV" ]; then
+    # Find SSH_AUTH_SOCK and SSH_AGENT_PID of the available daemon
+    source ${SSH_ENV} > /dev/null
+
+    # Check if the agent is still running
+    ierr=0
+    ps ${SSH_AGENT_PID} > /dev/null || ierr=1
+
+    if [ $ierr = "0" ]; then
+        echo > /dev/null
+    else
+        # If not initialize new agent and 
+        # add authentication
+        start_agent;
+    fi
+else
+    start_agent;    
+fi
+
+# Clean localhost entry in the known host file
+ssh_clean
+
+# vim: set filetype=sh:
