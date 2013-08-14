@@ -4,14 +4,8 @@ alias alsaeq="alsamixer -D equal"
 # reset urxvt terminal
 alias cls="echo -ne '\033c'"
 
-# git
-alias gst="git status --short"
-alias gc="git commit"
-alias ga="git add"
-alias gl="git log --stat"
-alias gll="git --no-pager log --pretty=tformat:'%h %ad %s (%an)' --date=short"
-alias gpl="git pull"
-alias gps="git push"
+# git (further aliases in gitconfig)
+alias g="git"
 
 # modified commands
 alias diff='colordiff'              # requires colordiff package
