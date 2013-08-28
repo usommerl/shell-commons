@@ -20,11 +20,10 @@ alias ..='cd ..'
 alias h='history'
 
 # ls
-alias ls='ls -hF --group-directories-first --color=auto'
-alias l='ls -l'
-alias ll='ls -la'
-alias lx='ll -BX'       # sort by extension
-alias lz='ll -rS'       # sort by size
-alias lt='ll -rt'       # sort by date
+alias ls='ls -lhF --color=auto --time-style=long-iso'
+alias l='ls -H --group-directories-first'
+alias ll='ls -HA --group-directories-first'
+alias lz='ls -HAS'
+alias lt='ls -HAt'
 
 # vim: set filetype=sh:
