@@ -11,8 +11,8 @@ alias g="git"
 alias diff='colordiff'              # requires colordiff package
 alias grep='grep --color=auto'
 alias more='less'
-alias df='df -h -x tmpfs -x devtmpfs -x rootfs'
-alias di='di -ss -x tmpfs,run'
+alias df='df -h -x tmpfs -x devtmpfs -x rootfs -x ecryptfs'
+alias di='di -ss -x tmpfs,run,ecryptfs'
 alias du='du -c -h'
 alias mkdir='mkdir -p -v'
 alias ping='ping -c 5'
@@ -23,7 +23,6 @@ alias h='history'
 alias ls='ls -lhF --color=auto --time-style=long-iso'
 alias l='ls -H --group-directories-first'
 alias ll='ls -HA --group-directories-first'
-alias lz='ls -HAS'
-alias lt='ls -HAt'
+alias lt='ls -HAtr'
 
 # vim: set filetype=sh:
