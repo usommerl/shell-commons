@@ -1,23 +1,27 @@
-function _listHelper() {
-    result=$(ls -hF --group-directories-first $2 --color=always $1 \
-             | egrep $3 --color=never '^d' | egrep -v '^total')
-    if [ -n "$result" ]; then echo "$result"; fi
+function _listFilterBase() {
+    ls -lhHF $2 --color=always --group-directories-first \
+                --time-style=long-iso $1 | egrep -v '^total'
 }
 
-function ldir() { 
-    _listHelper "$1" '-l' 
-} 
-
-function lldir() { 
-    _listHelper "$1" '-la' 
-} 
-
-function lf() { 
-    _listHelper "$1" '-l' '-v' 
+function _onlyHiddenFilter() {
+    egrep '.+[[:space:]]([[:cntrl:]]\[([[:digit:]]{2};)*[[:digit:]]{2}m)?\..+'
 }
 
-function llf() { 
-    _listHelper "$1" '-la' '-v' 
-}
+function _directoryFilter() { egrep $1 --color=never '^d'; }
 
+function ldir() { _listFilterBase $1 | _directoryFilter; } 
+
+function lldir() { _listFilterBase $1 '-A' | _directoryFilter; } 
+
+function lhdir { lldir $1 | _onlyHiddenFilter; }
+
+function lf() { _listFilterBase $1 | _directoryFilter '-v'; }
+
+function llf() { _listFilterBase $1 '-A' | _directoryFilter '-v'; }
+
+function lhf() { llf $1 | _onlyHiddenFilter; }
+
+function lh() { _listFilterBase $1 '-A' | _onlyHiddenFilter; }
+
+function lz() { du -ahL -d 1 $1 2>/dev/null | sort -h; }
 # vim: set filetype=sh:
