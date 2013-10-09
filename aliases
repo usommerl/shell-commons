@@ -4,9 +4,6 @@ alias alsaeq="alsamixer -D equal"
 # reset urxvt terminal
 alias cls="echo -ne '\033c'"
 
-# git (further aliases in gitconfig)
-alias g="git"
-
 # modified commands
 alias diff='colordiff'              # requires colordiff package
 alias grep='grep --color=auto'
@@ -24,5 +21,9 @@ alias ls='ls -lhF --color=auto --time-style=long-iso'
 alias l='ls -H --group-directories-first'
 alias ll='ls -HA --group-directories-first'
 alias lt='ls -HAtr'
+
+# shortcuts
+alias vbm='VBoxManage'
+alias g="git" # further git aliases in gitconfig
 
 # vim: set filetype=sh:
