@@ -41,4 +41,16 @@ function rtmpSniffEnvironment() {
         echo "Usage: $0 <$setup|$teardown>"
    esac
 }
+
+function templateGitignore() {
+  if [ $# -gt 0 ]; then
+      local baseURL='https://raw.github.com/github/gitignore/master/'
+      curl -fs ${baseURL}${1}.gitignore >> .gitignore
+      if [ $? -ne 0 ]; then
+          echo "Language template not found"
+      fi
+  else
+      echo "Usage: $0 <language>"
+  fi
+}
 # vim: set filetype=sh:
