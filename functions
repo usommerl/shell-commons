@@ -24,4 +24,21 @@ function lhf() { llf $1 | _onlyHiddenFilter; }
 function lh() { _listFilterBase $1 '-A' | _onlyHiddenFilter; }
 
 function lz() { du -ahL -d 1 $1 2>/dev/null | sort -h; }
+
+function rtmpSniffEnvironment() {
+   local setup='setup'
+   local teardown='teardown'
+
+   case $1 in
+    $setup )
+        sudo iptables -t nat -A OUTPUT -p tcp --dport 1935 -j REDIRECT
+        rtmpsrv
+        ;;
+    $teardown )
+        sudo iptables -t nat -D OUTPUT -p tcp --dport 1935 -j REDIRECT
+        ;;
+    *)
+        echo "Usage: $0 <$setup|$teardown>"
+   esac
+}
 # vim: set filetype=sh:
