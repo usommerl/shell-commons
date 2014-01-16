@@ -1,3 +1,14 @@
+function fail() {
+    echo -e "\e[1;31m[fail]\e[0m $@"
+    kill -INT $$ # kills only the function stack and not the entire shell
+}
+
+function requires() {
+    for arg in $*; do
+        command -v $arg &> /dev/null || { fail "The command ‘$arg’ is required." }
+    done
+}
+
 function _listFilterBase() {
     ls -lhHF $2 --color=always --group-directories-first \
                 --time-style=long-iso $1 | egrep -v '^total'
@@ -52,5 +63,26 @@ function templateGitignore() {
   else
       echo "Usage: $0 <language>"
   fi
+}
+
+function _setColorscheme() {
+    requires xrdb
+    echo "URxvt.cursorColor: $1\\n*background: $2\\n*foreground: $3" | xrdb -merge
+    killall -s HUP awesome
+}
+
+function colorscheme() {
+   local light='light'
+   local dark='dark'
+   case $1 in
+    $light )
+        _setColorscheme "9" "#FFFFFF" "#000000"
+        ;;
+    $dark )
+        _setColorscheme "11" "#000000" "#babdb6"
+        ;;
+    *)
+        echo "Usage: $0 <$light|$dark>"
+   esac
 }
 # vim: set filetype=sh:
