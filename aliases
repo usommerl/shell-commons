@@ -26,5 +26,6 @@ alias lt='ls -HAtr'
 # shortcuts
 alias vbm='VBoxManage'
 alias g="git" # further git aliases in gitconfig
+alias wlanls="nmcli -f signal,ssid,security dev wifi | sort -n"
 
 # vim: set filetype=sh:
