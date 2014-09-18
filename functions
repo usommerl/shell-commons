@@ -85,4 +85,10 @@ function colorscheme() {
         echo "Usage: $0 <$light|$dark>"
    esac
 }
+
+# TODO allow arguments (i.e. -n)
+function musicRename() {
+  requires perl-rename
+  perl-rename 'tr/A-Z/a-z/ && s/ /_/g && s/[_-]?[\(\[]?(\d{4}|flac)[\)\]]?//g' $1
+}
 # vim: set filetype=sh:
