@@ -53,9 +53,9 @@ function rtmpSniffEnvironment() {
    esac
 }
 
-function templateGitignore() {
+function gitignoreTemplate() {
   if [ $# -gt 0 ]; then
-      local baseURL='https://raw.github.com/github/gitignore/master/'
+      local baseURL='https://raw.githubusercontent.com/github/gitignore/master/'
       curl -fs ${baseURL}${1}.gitignore >> .gitignore
       if [ $? -ne 0 ]; then
           echo "Language template not found"
