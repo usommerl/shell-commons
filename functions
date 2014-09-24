@@ -5,7 +5,7 @@ function fail() {
 
 function requires() {
     for arg in $*; do
-        command -v $arg &> /dev/null || { fail "The command ‘$arg’ is required." }
+        command -v $arg &> /dev/null || { fail "The command ‘$arg’ is required."; }
     done
 }
 
