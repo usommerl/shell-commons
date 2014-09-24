@@ -23,9 +23,18 @@ alias l='ls -H --group-directories-first'
 alias ll='ls -HA --group-directories-first'
 alias lt='ls -HAtr'
 
+# require root privileges
+
+alias vpnc='sudo vpnc'
+alias vpnc-disconnect='sudo vpnc-disconnect'
+
 # shortcuts
 alias vbm='VBoxManage'
 alias g="git" # further git aliases in gitconfig
-alias wlanls="nmcli -f signal,ssid,security dev wifi | sort -n"
+alias lswifi="nmcli -f signal,ssid,security dev wifi | sort -n"
+
+alias ext-ip='curl icanhazip.com'
+
+alias luatexfonts='cat ~/.texlive/texmf-var/luatex-cache/generic/names/otfl-names.lua | grep familyname | cut -d "\"" -f 4 | sort | uniq'
 
 # vim: set filetype=sh:
