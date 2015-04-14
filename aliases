@@ -1,5 +1,5 @@
 # custom commands
-alias rdsktp="rdesktop -g 100% -PKD -k de -z -x l -r sound:off"
+alias rdsktp="rdesktop -g 100% -PKD -k de -z -x l -r sound:off -r clipboard:CLIPBOARD"
 alias vncScreenShare="x11vnc -safer -nopw -viewonly -shared -forever -threads -noxdamage -mdns"
 # reset urxvt terminal
 alias cls="echo -ne '\033c'"
