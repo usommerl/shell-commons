@@ -126,4 +126,11 @@ create_branch() {
     printf "\n"
     ruby $AMOS_HOME/common/ci_support/create_branch.rb -j usommerl -p $JIRA_PASSWORD $@
 }
+
+birt_server() {
+    source $HOME/transtor/transtor/config/transtor.amosrc
+    source $AMOS_COMMON/smile/set_env.sh
+    cd $AMOS_NAT/rails/amos-reports/script/
+    jruby server -p 10001 -P /amos-reports
+}
 # vim: set filetype=sh:
