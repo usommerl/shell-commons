@@ -118,4 +118,12 @@ function musicRename() {
   requires perl-rename
   perl-rename 'tr/A-Z/a-z/ && s/ /_/g && s/[_-]?[\(\[]?(\d{4}|flac)[\)\]]?//g' $1
 }
+
+# osp
+create_branch() {
+    printf "Insert JIRA password: "
+    read -s JIRA_PASSWORD
+    printf "\n"
+    ruby $AMOS_HOME/common/ci_support/create_branch.rb -j usommerl -p $JIRA_PASSWORD $@
+}
 # vim: set filetype=sh:
