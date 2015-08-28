@@ -5,4 +5,8 @@ export TEXMFHOME=$HOME/.texmf
 export PATH="/usr/nx/bin/:$HOME/.local/bin:$PATH"
 export MPD_HOST=/$HOME/.mpd/socket
 
+# osp
+export CI_REPORTS=/tmp
+export CI_CAPTURE=off
+
 # vim: set filetype=sh:
