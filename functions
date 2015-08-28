@@ -120,14 +120,14 @@ function musicRename() {
 }
 
 # osp
-create_branch() {
+function create_branch() {
     printf "Insert JIRA password: "
     read -s JIRA_PASSWORD
     printf "\n"
     ruby $AMOS_HOME/common/ci_support/create_branch.rb -j usommerl -p $JIRA_PASSWORD $@
 }
 
-birt_server() {
+function birt_server() {
     source $HOME/transtor/transtor/config/transtor.amosrc
     source $AMOS_COMMON/smile/set_env.sh
     cd $AMOS_NAT/rails/amos-reports/script/
