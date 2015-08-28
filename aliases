@@ -37,6 +37,9 @@ alias ext-ip='curl icanhazip.com'
 alias luatexfonts='cat ~/.texlive/texmf-var/luatex-cache/generic/names/otfl-names.lua | grep familyname | cut -d "\"" -f 4 | sort | uniq'
 
 # osp
-alias transtor='. ~/transtor/transtor/config/transtor.amosrc; cd ~/transtor/transtor'
-alias sample='. ~/sample/sample/ci_support/set_env.sh; cd ~/sample/sample'
+alias transtor='. ~/repos/transtor/config/transtor.amosrc; cd ~/repos/transtor'
+alias sample='. ~/repos/sample/ci_support/set_env.sh; cd ~/repos/sample'
+alias russia='. ~/repos/russia/ci_support/set_env.sh; cd ~/repos/russia'
+alias set_proxy='export http_proxy=http://proxy.osp-dd.de:3128; export https_proxy=http://proxy.osp-dd.de:3128'
+alias unset_proxy='unset http_proxy; unset https_proxy'
 # vim: set filetype=sh:
