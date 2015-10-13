@@ -4,6 +4,7 @@ export LESS=-iR
 export TEXMFHOME=$HOME/.texmf
 export PATH="/usr/nx/bin/:$HOME/.local/bin:$PATH"
 export MPD_HOST=/$HOME/.mpd/socket
+export TERM=rxvt-unicode
 
 # osp
 export CI_REPORTS=/tmp
