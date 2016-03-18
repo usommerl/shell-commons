@@ -1,5 +1,4 @@
-export GIT_EDITOR=vim
-export EDITOR=vim
+export EDITOR=nvim
 export LESS=-iR
 export TEXMFHOME=$HOME/.texmf
 export PATH="/usr/nx/bin/:$HOME/.local/bin:$PATH"
