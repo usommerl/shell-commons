@@ -1,6 +1,5 @@
-export GIT_EDITOR=vim
 export JAVA_HOME=/usr/lib/jvm/default
-export EDITOR=vim
+export EDITOR=nvim
 export LESS=-iR
 export DART_SDK=/opt/dart/dart-sdk/
 export GEM_HOME=$HOME/.gem/ruby/2.1.0
