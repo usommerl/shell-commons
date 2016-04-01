@@ -5,6 +5,9 @@ export PATH="/usr/nx/bin/:$HOME/.local/bin:$PATH"
 export MPD_HOST=/$HOME/.mpd/socket
 export TERM=rxvt-unicode
 
+# Sets LS_COLORS variable
+eval $(dircolors $HOME/.dir_colors 2>/dev/null)
+
 # osp
 export CI_REPORTS=/tmp
 export CI_CAPTURE=off
