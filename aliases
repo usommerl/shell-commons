@@ -18,6 +18,7 @@ alias h='history'
 alias nvlc='nvlc --no-color'
 alias vim="vim --servername $VIM_SERVERNAME"
 alias vir="vim --servername $VIM_SERVERNAME --remote-silent"
+alias sqlplus='rlwrap sqlplus'
 
 # ls
 alias ls='ls -lhF --color=auto --time-style=long-iso'
