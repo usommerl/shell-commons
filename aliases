@@ -29,6 +29,7 @@ alias lt='ls -HAtr'
 # require root privileges
 alias vpnc='sudo vpnc'
 alias vpnc-disconnect='sudo vpnc-disconnect'
+alias docker='sudo -E docker'
 
 # shortcuts
 alias vbm='VBoxManage'
