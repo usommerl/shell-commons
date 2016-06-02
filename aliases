@@ -15,6 +15,7 @@ alias mkdir='mkdir -p -v'
 alias ping='ping -c 5'
 alias ..='cd ..'
 alias h='history'
+alias watch='watch --color'
 alias nvlc='nvlc --no-color'
 alias vim="vim --servername $VIM_SERVERNAME"
 alias vir="vim --servername $VIM_SERVERNAME --remote-silent"
