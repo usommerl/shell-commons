@@ -22,10 +22,10 @@ alias vir="vim --servername $VIM_SERVERNAME --remote-silent"
 alias sqlplus='rlwrap sqlplus'
 
 # ls
-alias ls='ls -lhF --color=auto --time-style=long-iso'
-alias l='ls -H --group-directories-first'
-alias ll='ls -HA --group-directories-first'
-alias lt='ls -HAtr'
+alias ls_base='ls -lhF --color=auto --time-style=long-iso'
+alias l='ls_base -H --group-directories-first'
+alias ll='ls_base -HA --group-directories-first'
+alias lt='ls_base -HAtr'
 
 # require root privileges
 alias vpnc='sudo vpnc'
