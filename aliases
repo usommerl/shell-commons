@@ -41,9 +41,9 @@ alias luatexfonts='cat ~/.texlive/texmf-var/luatex-cache/generic/names/otfl-name
 alias ack='ack-grep'
 
 # osp
-alias transtor='. ~/repos/transtor/config/transtor.amosrc; cd ~/repos/transtor'
-alias sample='. ~/repos/sample/ci_support/set_env.sh; cd ~/repos/sample'
-alias russia='. ~/repos/russia/ci_support/set_env.sh; cd ~/repos/russia'
+alias transtor='. ~/repos/t/transtor/ci_support/set_env.sh; cd ~/repos/t/transtor'
+alias sample='. ~/repos/s/sample/ci_support/set_env.sh; cd ~/repos/s/sample'
+alias russia='. ~/repos/r/russia/ci_support/set_env.sh; cd ~/repos/r/russia'
 alias set_proxy='export http_proxy=http://proxy.osp-dd.de:3128; export https_proxy=http://proxy.osp-dd.de:3128'
 alias unset_proxy='unset http_proxy; unset https_proxy'
 # vim: set filetype=sh:

@@ -142,5 +142,81 @@ function birt_server() {
         echo "birt_server [up|down]"
     esac
 }
+
+function _basename_to_upper {
+  echo "$(basename $1 | tr '[:lower:]' '[:upper:]')"
+}
+
+function _show_branch {
+  printf "* %-10s: %s\n" "$(_basename_to_upper $1)" "$(git -C $1 rev-parse --abbrev-ref HEAD)"
+}
+
+function _clean_repo {
+  echo "* Cleaning $(_basename_to_upper $1)"
+  git -C $1 clean -f -d
+}
+
+function _check_branches {
+  for path in "$AMOS_NAT" "${AMOS_NAT}-ng" "$AMOS_COMMON"; do
+    [ -e "$path" ] && _show_branch "$path"
+  done
+}
+
+function _clean_repos {
+  for path in "$AMOS_NAT" "${AMOS_NAT}-ng" "$AMOS_COMMON"; do
+    [ -e "$path" ] && _clean_repo "$path"
+  done
+}
+
+function _continue_make {
+  read -p "Continue with project make (y/n) ? " choice
+  case "$choice" in
+    y|Y ) echo true;;
+    * ) echo false;;
+  esac
+}
+
+function _generate_configs {
+  local vm_properties="env_sample_vm.yml"
+  case "$AMOS_PROJ" in
+    transtor ) vm_properties="env_vm_properties.yml";;
+    russia ) vm_properties="env_amosVirtualBox.yml";;
+  esac
+  echo "* Generate configs"
+  cd $AMOS_NAT/config
+  ruby generate_configs.rb -p "env_default_properties.yml,$vm_properties"
+  cd $AMOS_NAT
+}
+
+function _reload_environment {
+  echo "* Reload environment"
+  source "${AMOS_NAT}/ci_support/set_env.sh"
+}
+
+function _make_project {
+  local make_cmd="make install"
+  case "$AMOS_PROJ" in
+    transtor|russia ) make_cmd="ci_support/ci_make.sh";;
+  esac
+  cd $AMOS_NAT
+  time $make_cmd 2>&1
+}
+
+function mmake {
+  if [ -z $AMOS_NAT ]; then
+    echo 'Project environment not set'
+    return
+  fi
+  local logfile="$HOME/repos/$(date --iso-8601=seconds)_${AMOS_PROJ}_make.log"
+  ( _check_branches
+    if [ $(_continue_make) == false ]; then
+      rm -f $logfile
+      return
+    fi
+    _clean_repos
+    _generate_configs
+    _reload_environment
+    _make_project ) | tee $logfile
+}
 }
 # vim: set filetype=sh:
