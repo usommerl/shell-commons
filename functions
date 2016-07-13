@@ -1,42 +1,42 @@
-function fail() {
+fail() {
     echo -e "\e[1;31m[fail]\e[0m $@"
     kill -INT $$ # kills only the function stack and not the entire shell
 }
 
-function requires() {
+requires() {
     for arg in $*; do
         command -v $arg &> /dev/null || { fail "The command ‘$arg’ is required."; }
     done
 }
 
-function _listFilterBase() {
+_listFilterBase() {
     ls -lhHF $2 --color=always --group-directories-first \
                 --time-style=long-iso $1 | egrep -v '^total'
 }
 
-function _onlyHiddenFilter() {
+_onlyHiddenFilter() {
     egrep '.+[[:space:]]([[:cntrl:]]\[([[:digit:]]{2};)*[[:digit:]]{2}m)?\..+'
 }
 
-function _directoryFilter() { egrep $1 --color=never '^d'; }
+_directoryFilter() { egrep $1 --color=never '^d'; }
 
-function ldir() { _listFilterBase $1 | _directoryFilter; } 
+ldir() { _listFilterBase $1 | _directoryFilter; }
 
-function lldir() { _listFilterBase $1 '-A' | _directoryFilter; } 
+lldir() { _listFilterBase $1 '-A' | _directoryFilter; }
 
-function lhdir { lldir $1 | _onlyHiddenFilter; }
+lhdir() { lldir $1 | _onlyHiddenFilter; }
 
-function lf() { _listFilterBase $1 | _directoryFilter '-v'; }
+lf() { _listFilterBase $1 | _directoryFilter '-v'; }
 
-function llf() { _listFilterBase $1 '-A' | _directoryFilter '-v'; }
+llf() { _listFilterBase $1 '-A' | _directoryFilter '-v'; }
 
-function lhf() { llf $1 | _onlyHiddenFilter; }
+lhf() { llf $1 | _onlyHiddenFilter; }
 
-function lh() { _listFilterBase $1 '-A' | _onlyHiddenFilter; }
+lh() { _listFilterBase $1 '-A' | _onlyHiddenFilter; }
 
-function lz() { du -ahL -d 1 $1 2>/dev/null | sort -h; }
+lz() { du -ahL -d 1 $1 2>/dev/null | sort -h; }
 
-function rtmpSniffEnvironment() {
+rtmpSniffEnvironment() {
    local setup='setup'
    local teardown='teardown'
 
@@ -53,7 +53,7 @@ function rtmpSniffEnvironment() {
    esac
 }
 
-function gitignoreTemplate() {
+gitignoreTemplate() {
   if [ $# -gt 0 ]; then
       local baseURL='https://raw.githubusercontent.com/github/gitignore/master/'
       curl -fs ${baseURL}${1}.gitignore >> .gitignore
@@ -65,13 +65,13 @@ function gitignoreTemplate() {
   fi
 }
 
-function _setColorscheme() {
+_setColorscheme() {
     requires xrdb
     echo "URxvt.cursorColor: $1\\n*background: $2\\n*foreground: $3" | xrdb -merge
     killall -s HUP awesome
 }
 
-function colorscheme() {
+colorscheme() {
    local light='light'
    local dark='dark'
    case $1 in
@@ -86,7 +86,7 @@ function colorscheme() {
    esac
 }
 
-function flac2mp3() {
+flac2mp3() {
     requires ffmpeg
     requires parallel
 
@@ -114,20 +114,20 @@ function flac2mp3() {
 }
 
 # TODO allow arguments (i.e. -n)
-function musicRename() {
+musicRename() {
   requires perl-rename
   perl-rename 'tr/A-Z/a-z/ && s/ /_/g && s/[_-]?[\(\[]?(\d{4}|flac)[\)\]]?//g' $1
 }
 
 # osp
-function create_branch() {
+create_branch() {
     printf "Insert JIRA password: "
     read -s JIRA_PASSWORD
     printf "\n"
     ruby $AMOS_HOME/common/ci_support/create_branch.rb -j usommerl -p $JIRA_PASSWORD $@
 }
 
-function birt_server() {
+birt_server() {
     case $1 in
     "up")
         source $HOME/repos/transtor/config/transtor.amosrc
@@ -143,32 +143,32 @@ function birt_server() {
     esac
 }
 
-function _basename_to_upper {
+_basename_to_upper() {
   echo "$(basename $1 | tr '[:lower:]' '[:upper:]')"
 }
 
-function _show_branch {
+_show_branch() {
   printf "* %-10s: %s\n" "$(_basename_to_upper $1)" "$(git -C $1 rev-parse --abbrev-ref HEAD)"
 }
 
-function _clean_repo {
+_clean_repo() {
   echo "* Cleaning $(_basename_to_upper $1)"
   git -C $1 clean -f -d
 }
 
-function _check_branches {
+_check_branches() {
   for path in "$AMOS_NAT" "${AMOS_NAT}-ng" "$AMOS_COMMON"; do
     [ -e "$path" ] && _show_branch "$path"
   done
 }
 
-function _clean_repos {
+_clean_repos() {
   for path in "$AMOS_NAT" "${AMOS_NAT}-ng" "$AMOS_COMMON"; do
     [ -e "$path" ] && _clean_repo "$path"
   done
 }
 
-function _continue_make {
+_continue_make() {
   read -p "Continue with project make (y/n) ? " choice
   case "$choice" in
     y|Y ) echo true;;
@@ -176,7 +176,7 @@ function _continue_make {
   esac
 }
 
-function _generate_configs {
+_generate_configs() {
   local vm_properties="env_sample_vm.yml"
   case "$AMOS_PROJ" in
     transtor ) vm_properties="env_vm_properties.yml";;
@@ -188,12 +188,12 @@ function _generate_configs {
   cd $AMOS_NAT
 }
 
-function _reload_environment {
+_reload_environment() {
   echo "* Reload environment"
   source "${AMOS_NAT}/ci_support/set_env.sh"
 }
 
-function _make_project {
+_make_project() {
   local make_cmd="make install"
   case "$AMOS_PROJ" in
     transtor|russia ) make_cmd="ci_support/ci_make.sh";;
@@ -202,7 +202,7 @@ function _make_project {
   time $make_cmd 2>&1
 }
 
-function mmake {
+mmake() {
   if [ -z $AMOS_NAT ]; then
     echo 'Project environment not set'
     return
