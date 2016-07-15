@@ -169,37 +169,50 @@ _clean_repos() {
 }
 
 _continue_make() {
-  read -p "Continue with project make (y/n) ? " choice
+  read -p 'Continue with project make (y/n) ? ' choice
   case "$choice" in
     y|Y ) echo true;;
     * ) echo false;;
   esac
 }
 
+_project_instance() {
+  echo $(basename $(dirname "$AMOS_NAT"))
+}
+
+_set_dbuser_suffix() {
+  local dbuser_suffix="_$(_project_instance)"
+  sed -ri "s/(<.*$1>\s+:\s+)([\"\']?)(\w+)([\"\']?)/\1\2\U\3$dbuser_suffix\4/" $AMOS_NAT/config/$2
+}
+
 _generate_configs() {
-  local vm_properties="env_sample_vm.yml"
+  echo '* Generate configs'
+  local vm_properties='env_sample_vm.yml'
+  local default_properties='env_default_properties.yml'
   case "$AMOS_PROJ" in
-    transtor ) vm_properties="env_vm_properties.yml";;
-    russia ) vm_properties="env_amosVirtualBox.yml";;
+    transtor ) vm_properties='env_vm_properties.yml';;
+    russia ) vm_properties='env_amosVirtualBox.yml';;
   esac
-  echo "* Generate configs"
   cd $AMOS_NAT/config
-  ruby generate_configs.rb -p "env_default_properties.yml,$vm_properties"
+  _set_dbuser_suffix 'DBUSER' $vm_properties
+  _set_dbuser_suffix 'DBUSER_CM' $default_properties
+  ruby generate_configs.rb -p "$default_properties,$vm_properties"
+  git checkout $default_properties $vm_properties
   cd $AMOS_NAT
 }
 
 _reload_environment() {
-  echo "* Reload environment"
+  echo '* Reload environment'
   source "${AMOS_NAT}/ci_support/set_env.sh"
 }
 
 _make_project() {
-  local make_cmd="make install"
+  local make_cmd='make install'
   case "$AMOS_PROJ" in
-    transtor|russia ) make_cmd="ci_support/ci_make.sh";;
+    transtor|russia ) make_cmd='ci_support/ci_make.sh';;
   esac
   cd $AMOS_NAT
-  time $make_cmd 2>&1
+  time $make_cmd
 }
 
 mmake() {
@@ -207,7 +220,7 @@ mmake() {
     echo 'Project environment not set'
     return
   fi
-  local logfile="$HOME/repos/$(date --iso-8601=seconds)_${AMOS_PROJ}_make.log"
+  local logfile="$HOME/repos/$(date --iso-8601=seconds)_$(_project_instance)_make.log"
   ( _check_branches
     if [ $(_continue_make) == false ]; then
       rm -f $logfile
@@ -216,7 +229,7 @@ mmake() {
     _clean_repos
     _generate_configs
     _reload_environment
-    _make_project ) | tee $logfile
+    _make_project ) 2>&1 | tee $logfile
 }
 }
 # vim: set filetype=sh:
