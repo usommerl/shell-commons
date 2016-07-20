@@ -41,13 +41,6 @@ alias luatexfonts='cat ~/.texlive/texmf-var/luatex-cache/generic/names/otfl-name
 alias ack='ack-grep'
 
 # osp
-for dir in $HOME/repos/*/; do
-  no=$(basename $dir | sed -r 's/\w+([0-9]+)/\1/')
-  inst=$(basename $(find $dir -maxdepth 1 -type d -iname transtor -o -iname sample -o -iname russia))
-  alias ${inst}${no}="unset WORKSPACE; source ${dir}${inst}/ci_support/set_env.sh; cd ${dir}${inst}"
-done
-unset dir no inst
-
 alias set_proxy='export http_proxy=http://proxy.osp-dd.de:3128; export https_proxy=http://proxy.osp-dd.de:3128'
 alias unset_proxy='unset http_proxy; unset https_proxy'
 # vim: set filetype=sh:
