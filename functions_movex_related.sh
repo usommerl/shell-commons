@@ -125,7 +125,8 @@ _create_aliases() {
   local dir
   for dir in $MOVEX_REPOS/*/; do
     local no=$(basename $dir | sed -r 's/\w+([0-9]+)/\1/')
-    local inst=$(basename $(find $dir -maxdepth 1 -type d -iname transtor -o -iname sample -o -iname russia))
+    local inst=$(find $dir -maxdepth 1 -type d -iname transtor -o -iname sample -o -iname russia | sed -r 's/.*\/(\w+)$/\1/')
+    [[ -z "$no" || -z "$inst" ]] && continue
     alias ${inst}${no}="unset WORKSPACE; source ${dir}${inst}/ci_support/set_env.sh; cd ${dir}${inst}"
   done
 }
