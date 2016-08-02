@@ -2,6 +2,10 @@ __basename_to_upper() {
   echo "$(basename $1 | tr '[:lower:]' '[:upper:]')"
 }
 
+__basename_to_lower() {
+  echo "$(basename $1 | tr '[:upper:]' '[:lower:]')"
+}
+
 __show_branch() {
   printf "* %-10s: %s\n" "$(__basename_to_upper $1)" "$(git -C $1 rev-parse --abbrev-ref HEAD)"
 }
@@ -48,7 +52,8 @@ __reload_environment() {
 
 __make_project() {
   local make_cmd='make install'
-  case "$AMOS_PROJ" in
+  local project=$(__basename_to_lower $AMOS_NAT)
+  case "$project" in
     transtor|russia ) make_cmd='ci_support/ci_make.sh';;
   esac
   cd $AMOS_NAT
@@ -67,10 +72,9 @@ create_branch() {
     printf "Insert JIRA password: "
     read -s JIRA_PASSWORD
     printf "\n"
-    ruby $AMOS_HOME/common/ci_support/create_branch.rb -j usommerl -p $JIRA_PASSWORD $@
+    ruby $AMOS_COMMON/ci_support/create_branch.rb -j usommerl -p $JIRA_PASSWORD $@
 }
 
-readonly MOVEX_REPOS=$HOME/repos
 
 # Folder layout for MOVEX repositories:
 #
@@ -92,6 +96,8 @@ readonly MOVEX_REPOS=$HOME/repos
 #     └── sample
 # ...
 
+readonly MOVEX_REPOS=$HOME/repos
+
 movex_aliases() {
   local dir
   for dir in $MOVEX_REPOS/*/; do
@@ -104,16 +110,17 @@ movex_aliases() {
 movex_aliases
 
 generate_configs() {
-  echo '* Generate configs'
   local vm_properties='env_sample_vm.yml'
   local default_properties='env_default_properties.yml'
-  case "$AMOS_PROJ" in
+  local project=$(__basename_to_lower $AMOS_NAT)
+  case "$project" in
     transtor ) vm_properties='env_vm_properties.yml';;
     russia ) vm_properties='env_amosVirtualBox.yml';;
   esac
   cd $AMOS_NAT/config
   __set_dbuser_suffix 'DBUSER' $vm_properties
   __set_dbuser_suffix 'DBUSER_CM' $default_properties
+  echo "* Generate configs ($default_properties,$vm_properties)"
   ruby generate_configs.rb -p "$default_properties,$vm_properties"
   git checkout $default_properties $vm_properties
   cd $AMOS_NAT
