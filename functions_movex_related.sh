@@ -78,7 +78,7 @@ create_branch() {
 
 # Folder layout for MOVEX repositories:
 #
-# $MOVE_REPOS/
+# $MOVEX_REPOS/
 # ├── t1
 # │   ├── common
 # │   ├── data
