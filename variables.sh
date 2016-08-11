@@ -1,4 +1,5 @@
 export EDITOR=nvim
+export BROWSER=/usr/bin/chromium-browser
 export LESS=-iR
 export TEXMFHOME=$HOME/.texmf
 export PATH="$HOME/.rbenv/shims:/opt/glassfish/glassfish/bin:/usr/nx/bin/:$HOME/.local/bin:$PATH"
