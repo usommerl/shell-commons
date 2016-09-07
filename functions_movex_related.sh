@@ -52,8 +52,7 @@ __reload_environment() {
 
 __make_project() {
   local make_cmd='make install'
-  local project=$(__basename_to_lower $AMOS_NAT)
-  case "$project" in
+  case "$(__basename_to_lower $AMOS_NAT)" in
     transtor|russia ) make_cmd='ci_support/ci_make.sh';;
   esac
   cd $AMOS_NAT
@@ -102,28 +101,46 @@ movex_aliases() {
   local dir
   for dir in $MOVEX_REPOS/*/; do
     local no=$(basename $dir | sed -r 's/\w+([0-9]+)/\1/')
-    local inst=$(find $dir -maxdepth 1 -type d -iname transtor -o -iname sample -o -iname russia | sed -r 's/.*\/(\w+)$/\1/')
+    local inst=$(find $dir -maxdepth 1 -type d -iname transtor -o -iname sample -o -iname russia -o -iname hww | sed -r 's/.*\/(\w+)$/\1/')
     [[ -z "$no" || -z "$inst" ]] && continue
-    alias ${inst}${no}="unset WORKSPACE; source ${dir}${inst}/ci_support/set_env.sh; cd ${dir}${inst}"
+    case "$inst" in
+      hww) alias ${inst}${no}="source ${dir}${inst}/config/hww.amosrc; cd ${dir}${inst}";;
+      *) alias ${inst}${no}="unset WORKSPACE; source ${dir}${inst}/ci_support/set_env.sh; cd ${dir}${inst}";;
+    esac
   done
 }
 movex_aliases
 
 generate_configs() {
+  local project=$(__basename_to_lower $AMOS_NAT)
+  cd $AMOS_NAT/config
+  echo "* Generate configs"
+  case "$project" in
+    hww ) __generate_configs_hww;;
+    * ) __generate_configs_for "$project";;
+  esac
+  cd $AMOS_NAT
+  git checkout config
+}
+
+__generate_configs_hww() {
+  cd $AMOS_NAT/config
+  local vm_properties='env/env_hww_vm.yml'
+  [ -f 'env/env_default_properties.yml' ] && local default_properties='env/env_default_properties.yml,'
+  __set_dbuser_suffix 'DBUSER' $vm_properties
+  ruby generate_configs.rb -p "$default_properties$vm_properties" -t env/env_hww_templates.yml
+}
+
+__generate_configs_for() {
   local vm_properties='env_sample_vm.yml'
   local default_properties='env_default_properties.yml'
-  local project=$(__basename_to_lower $AMOS_NAT)
-  case "$project" in
+  case "$1" in
     transtor ) vm_properties='env_vm_properties.yml';;
     russia ) vm_properties='env_amosVirtualBox.yml';;
   esac
-  cd $AMOS_NAT/config
   __set_dbuser_suffix 'DBUSER' $vm_properties
   __set_dbuser_suffix 'DBUSER_CM' $default_properties
-  echo "* Generate configs ($default_properties,$vm_properties)"
   ruby generate_configs.rb -p "$default_properties,$vm_properties"
-  git checkout $default_properties $vm_properties
-  cd $AMOS_NAT
 }
 
 movex_make() {
