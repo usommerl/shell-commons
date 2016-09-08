@@ -35,6 +35,9 @@ __continue_make() {
   esac
 }
 
+__project() {
+  echo $(__basename_to_lower $AMOS_NAT)
+}
 __project_instance() {
   echo $(basename $(dirname "$AMOS_NAT"))
 }
@@ -52,11 +55,38 @@ __reload_environment() {
 
 __make_project() {
   local make_cmd='make install'
-  case "$(__basename_to_lower $AMOS_NAT)" in
+  case "$(__project)" in
     transtor|russia ) make_cmd='ci_support/ci_make.sh';;
   esac
   cd $AMOS_NAT
   time $make_cmd
+}
+
+__property_files() {
+  local default_properties=$(find $AMOS_NAT/config -iname env_default_properties.yml \
+                             | sed -e 's/^.*config\///')
+  case "$(__project)" in
+    sample ) local vm_properties='env_sample_vm.yml';;
+    transtor ) local vm_properties='env_vm_properties.yml';;
+    russia ) local vm_properties='env_amosVirtualBox.yml';;
+    hww ) local vm_properties='env/env_hww_vm.yml';;
+  esac
+  echo "local default_properties=$default_properties; local vm_properties=$vm_properties"
+}
+
+__alter_dbuser() {
+  eval $(__property_files)
+  __set_dbuser_suffix 'DBUSER' $vm_properties
+  [ "$(__project)" == "russia" ] && __set_dbuser_suffix 'DBUSER_CM' $default_properties
+}
+
+__generate_configs_arg() {
+  eval $(__property_files)
+  local arg="-p "
+  [ ! -z "$default_properties" ] && arg="${arg}${default_properties},"
+  arg=${arg}${vm_properties}
+  [ "$(__project)" == "hww" ] && arg="${arg} -t env/env_hww_templates.yml"
+  echo $arg
 }
 
 dp_test_environment() {
@@ -113,35 +143,13 @@ movex_aliases() {
 movex_aliases
 
 generate_configs() {
-  local project=$(__basename_to_lower $AMOS_NAT)
+  local arg=$(__generate_configs_arg)
+  echo "* generate_configs.rb $arg"
+  __alter_dbuser
   cd $AMOS_NAT/config
-  echo "* Generate configs"
-  case "$project" in
-    hww ) __generate_configs_hww;;
-    * ) __generate_configs_for "$project";;
-  esac
+  generate_configs.rb $arg
   cd $AMOS_NAT
   git checkout config
-}
-
-__generate_configs_hww() {
-  cd $AMOS_NAT/config
-  local vm_properties='env/env_hww_vm.yml'
-  [ -f 'env/env_default_properties.yml' ] && local default_properties='env/env_default_properties.yml,'
-  __set_dbuser_suffix 'DBUSER' $vm_properties
-  ruby generate_configs.rb -p "$default_properties$vm_properties" -t env/env_hww_templates.yml
-}
-
-__generate_configs_for() {
-  local vm_properties='env_sample_vm.yml'
-  local default_properties='env_default_properties.yml'
-  case "$1" in
-    transtor ) vm_properties='env_vm_properties.yml';;
-    russia ) vm_properties='env_amosVirtualBox.yml';;
-  esac
-  __set_dbuser_suffix 'DBUSER' $vm_properties
-  __set_dbuser_suffix 'DBUSER_CM' $default_properties
-  ruby generate_configs.rb -p "$default_properties,$vm_properties"
 }
 
 movex_make() {
