@@ -136,7 +136,7 @@ generate_configs() {
 }
 
 movex_make() {
-  [ -z $AMOS_NAT ] && echo 'Project environment not set' && return
+  [ -z $AMOS_NAT ] && echo 'You need to set at least AMOS_NAT' && return
   local logfile="$MOVEX_REPOS/$(date --iso-8601=seconds)_$(__project_instance)_make.log"
   ( __check_branches
     [ $(__continue_make) == false ] && rm -f $logfile && return
