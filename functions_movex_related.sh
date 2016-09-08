@@ -3,7 +3,11 @@ __basename_to_upper() {
 }
 
 __show_branch() {
-  printf "* %-10s: %s\n" "$(__basename_to_upper $1)" "$(git -C $1 rev-parse --abbrev-ref HEAD)"
+  local project=$(__basename_to_upper $1)
+  local branch=$(git -C $1 rev-parse --abbrev-ref HEAD)
+  local untracked=$(git -C $1 status --porcelain 2>/dev/null| grep "^??" | wc -l)
+  [ $untracked -gt 0 ] && local warning="$untracked file(s) will be cleaned!"
+  printf "* %-10s: %s \e[1;33m%30s\e[m\n" "$project" "$branch" "$warning"
 }
 
 __clean_repo() {
