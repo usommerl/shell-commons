@@ -136,16 +136,10 @@ generate_configs() {
 }
 
 movex_make() {
-  if [ -z $AMOS_NAT ]; then
-    echo 'Project environment not set'
-    return
-  fi
+  [ -z $AMOS_NAT ] && echo 'Project environment not set' && return
   local logfile="$MOVEX_REPOS/$(date --iso-8601=seconds)_$(__project_instance)_make.log"
   ( __check_branches
-    if [ $(__continue_make) == false ]; then
-      rm -f $logfile
-      return
-    fi
+    [ $(__continue_make) == false ] && rm -f $logfile && return
     __clean_repos
     generate_configs
     __reload_environment
