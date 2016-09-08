@@ -46,7 +46,10 @@ __set_dbuser_suffix() {
 __reload_environment() {
   echo '* Reload environment'
   unset WORKSPACE
-  source "${AMOS_NAT}/ci_support/set_env.sh"
+  case "$(__project)" in
+    hww ) source $AMOS_NAT/config/hww.amosrc;;
+    * ) source $AMOS_NAT/ci_support/set_env.sh;;
+  esac
 }
 
 __make_project() {
