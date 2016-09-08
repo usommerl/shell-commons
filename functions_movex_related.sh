@@ -101,7 +101,8 @@ movex_aliases() {
   local dir
   for dir in $MOVEX_REPOS/*/; do
     local no=$(basename $dir | sed -r 's/\w+([0-9]+)/\1/')
-    local inst=$(find $dir -maxdepth 1 -type d -iname transtor -o -iname sample -o -iname russia -o -iname hww | sed -r 's/.*\/(\w+)$/\1/')
+    local inst=$(find $dir -maxdepth 1 -type d -iname transtor -o -iname sample \
+                           -o -iname russia -o -iname hww | sed -r 's/.*\/(\w+)$/\1/')
     [[ -z "$no" || -z "$inst" ]] && continue
     case "$inst" in
       hww) alias ${inst}${no}="source ${dir}${inst}/config/hww.amosrc; cd ${dir}${inst}";;
