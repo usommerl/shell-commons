@@ -2,10 +2,6 @@ __basename_to_upper() {
   echo "$(basename $1 | tr '[:lower:]' '[:upper:]')"
 }
 
-__basename_to_lower() {
-  echo "$(basename $1 | tr '[:upper:]' '[:lower:]')"
-}
-
 __show_branch() {
   printf "* %-10s: %s\n" "$(__basename_to_upper $1)" "$(git -C $1 rev-parse --abbrev-ref HEAD)"
 }
@@ -36,7 +32,7 @@ __continue_make() {
 }
 
 __project() {
-  echo $(__basename_to_lower $AMOS_NAT)
+  echo "$(basename $AMOS_NAT | tr '[:upper:]' '[:lower:]')"
 }
 __project_instance() {
   echo $(basename $(dirname "$AMOS_NAT"))
