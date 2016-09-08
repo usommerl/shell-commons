@@ -88,22 +88,6 @@ __generate_configs_arg() {
   echo $arg
 }
 
-dp_test_environment() {
-  if [ -z $AMOS_NAT ]; then
-    echo 'Project environment not set'
-  else
-    export RUBYLIB="$AMOS_NAT/ci_support/rubylib:$RUBYLIB"
-  fi
-}
-
-create_branch() {
-    printf "Insert JIRA password: "
-    read -s JIRA_PASSWORD
-    printf "\n"
-    ruby $AMOS_COMMON/ci_support/create_branch.rb -j usommerl -p $JIRA_PASSWORD $@
-}
-
-
 # Folder layout for MOVEX repositories:
 #
 # $MOVEX_REPOS/
@@ -166,4 +150,19 @@ movex_make() {
     generate_configs
     __reload_environment
     __make_project ) 2>&1 | tee $logfile
+}
+
+dp_test_environment() {
+  if [ -z $AMOS_NAT ]; then
+    echo 'Project environment not set'
+  else
+    export RUBYLIB="$AMOS_NAT/ci_support/rubylib:$RUBYLIB"
+  fi
+}
+
+create_branch() {
+    printf "Insert JIRA password: "
+    read -s JIRA_PASSWORD
+    printf "\n"
+    ruby $AMOS_COMMON/ci_support/create_branch.rb -j usommerl -p $JIRA_PASSWORD $@
 }
