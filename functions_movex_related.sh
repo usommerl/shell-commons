@@ -126,13 +126,14 @@ movex_aliases() {
 movex_aliases
 
 generate_configs() {
+  eval $(__property_files)
   local arg=$(__generate_configs_arg)
   echo "* generate_configs.rb $arg"
   __alter_dbuser
   cd $AMOS_NAT/config
   generate_configs.rb $arg
+  git checkout $vm_properties $default_properties
   cd $AMOS_NAT
-  git checkout config
 }
 
 movex_make() {
