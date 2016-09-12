@@ -145,10 +145,11 @@ movex_make() {
   local logfile="$MOVEX_REPOS/$(date --iso-8601=seconds)_$(__project_instance)_make.log"
   ( __check_branches
     [ $(__continue_make) == false ] && rm -f $logfile && return
+    printf "\n"
     __clean_repos
     generate_configs
     __reload_environment
-    __make_project ) 2>&1 | tee $logfile
+    __make_project ) 2>&1 | tee >(sed -u 's/\x1b\[[0-9;]*m//g' > $logfile)
 }
 
 dp_test_environment() {
