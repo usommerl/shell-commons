@@ -57,7 +57,7 @@ __reload_environment() {
 }
 
 __make_project() {
-  local make_cmd='make install'
+  local make_cmd='make clean install'
   case "$(__project)" in
     transtor|russia ) make_cmd='ci_support/ci_make.sh';;
   esac
