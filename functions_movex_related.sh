@@ -122,8 +122,8 @@ movex_aliases() {
                            -o -iname russia -o -iname hww | sed -r 's/.*\/(\w+)$/\1/')
     [[ -z "$no" || -z "$inst" ]] && continue
     case "$inst" in
-      hww) alias ${inst}${no}="source ${dir}${inst}/config/hww.amosrc; cd ${dir}${inst}";;
-      *) alias ${inst}${no}="unset WORKSPACE; source ${dir}${inst}/ci_support/set_env.sh; cd ${dir}${inst}";;
+      hww) alias $(basename $dir)="source ${dir}${inst}/config/hww.amosrc; cd ${dir}${inst}";;
+      *) alias $(basename $dir)="unset WORKSPACE; source ${dir}${inst}/ci_support/set_env.sh; cd ${dir}${inst}";;
     esac
   done
 }
