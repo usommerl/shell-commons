@@ -43,4 +43,5 @@ alias ack='ack-grep'
 # osp
 alias set_proxy='export http_proxy=http://proxy.osp-dd.de:3128; export https_proxy=http://proxy.osp-dd.de:3128'
 alias unset_proxy='unset http_proxy; unset https_proxy'
+alias sqlp='rlwrap sqlplus $AMOS_DBUSER/$AMOS_DBPASS@$DBNAME'
 # vim: set filetype=sh:
