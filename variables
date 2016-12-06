@@ -1,5 +1,6 @@
 export JAVA_HOME=/usr/lib/jvm/default
 export EDITOR=nvim
+export MANPAGER='nvim -c "set ft=man" -'
 export LESS=-iR
 export DART_SDK=/opt/dart/dart-sdk/
 export GEM_HOME=$HOME/.gem/ruby/2.2.0
