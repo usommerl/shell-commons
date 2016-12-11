@@ -166,3 +166,16 @@ create_branch() {
   printf "\n"
   ruby $AMOS_COMMON/ci_support/create_branch.rb -j usommerl -p $JIRA_PASSWORD $@
 }
+
+trigger_ci() {
+  local job="$1"
+  local issue="$2"
+  local start="${3:-now}"
+  local token="${4:-$job}"
+  local username='usommerl'
+  local url="http://movex-ci.osp-dd.de/job/$job/buildWithParameters?token=$token&manual_issue_key=$issue"
+  local password=''
+  printf 'password: ' && read -s password && printf "\n"
+  local curl_command="curl --user '$username:$password' '$url'"
+  echo $curl_command | at $start
+}
