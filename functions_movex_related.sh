@@ -169,22 +169,22 @@ create_branch() {
 
 __jira_transition_command() {
   local issue="$1"
-  local transtion_id="$2"
+  local transition_id="$2"
   local username="$3"
   local password="$4"
   local url="http://jira.osp-dd.de/rest/api/latest/issue/$issue/transitions?expand=transitions.fields"
-  local data="{\"transition\":{\"id\": \"$transtion_id\"}}"
+  local data="{\"transition\":{\"id\": \"$transition_id\"}}"
   local content_type='Content-Type: application/json'
   echo "curl -D- --user '$username:$password' -X POST --data '$data' -H '$content_type' '$url'"
 }
 
 jira_transition() {
   local issue="$1"
-  local transtion_id="$2"
+  local transition_id="$2"
   local username='usommerl'
   local password=''
   printf 'password: ' && read -s password && printf "\n"
-  eval "$(__jira_transition_command "$issue" "$transtion_id" "$username" "$password")"
+  eval "$(__jira_transition_command "$issue" "$transition_id" "$username" "$password")"
 }
 
 __trigger_ci_command() {
