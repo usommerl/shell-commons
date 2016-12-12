@@ -167,15 +167,45 @@ create_branch() {
   ruby $AMOS_COMMON/ci_support/create_branch.rb -j usommerl -p $JIRA_PASSWORD $@
 }
 
+__jira_transition_command() {
+  local issue="$1"
+  local transtion_id="$2"
+  local username="$3"
+  local password="$4"
+  local url="http://jira.osp-dd.de/rest/api/latest/issue/$issue/transitions?expand=transitions.fields"
+  local data="{\"transition\":{\"id\": \"$transtion_id\"}}"
+  local content_type='Content-Type: application/json'
+  echo "curl -D- --user '$username:$password' -X POST --data '$data' -H '$content_type' '$url'"
+}
+
+jira_transition() {
+  local issue="$1"
+  local transtion_id="$2"
+  local username='usommerl'
+  local password=''
+  printf 'password: ' && read -s password && printf "\n"
+  eval "$(__jira_transition_command "$issue" "$transtion_id" "$username" "$password")"
+}
+
+__trigger_ci_command() {
+  local job="$1"
+  local issue="$2"
+  local token="$3"
+  local username="$4"
+  local password="$5"
+  local url="http://movex-ci.osp-dd.de/job/$job/buildWithParameters?token=$token&manual_issue_key=$issue"
+  echo "curl --user '$username:$password' '$url'"
+}
+
 trigger_ci() {
   local job="$1"
   local issue="$2"
   local start="${3:-now}"
   local token="${4:-$job}"
   local username='usommerl'
-  local url="http://movex-ci.osp-dd.de/job/$job/buildWithParameters?token=$token&manual_issue_key=$issue"
   local password=''
   printf 'password: ' && read -s password && printf "\n"
-  local curl_command="curl --user '$username:$password' '$url'"
-  echo $curl_command | at $start
+  local jira_transition=$(__jira_transition_command "$issue" "51" "$username" "$password")
+  local trigger_ci=$(__trigger_ci_command "$job" "$issue" "$token" "$username" "$password")
+  echo "$jira_transition; $trigger_ci" | at $start
 }
