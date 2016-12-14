@@ -3,7 +3,9 @@ export BROWSER=/usr/bin/chromium-browser
 export MANPAGER='nvim -c "set ft=man" -'
 export LESS=-iR
 export TEXMFHOME=$HOME/.texmf
-export PATH="$HOME/.rbenv/shims:/opt/glassfish/glassfish/bin:/usr/nx/bin/:$HOME/.local/bin:$PATH"
+export GOPATH="$HOME/go"
+export GOROOT="$HOME/.local/go"
+export PATH="$HOME/.rbenv/shims:/opt/glassfish/glassfish/bin:/usr/nx/bin/:$HOME/.local/bin:$GOPATH/bin:$PATH"
 export MPD_HOST=/$HOME/.mpd/socket
 export TERM=xterm-256color
 export JAVA_HOME=/opt/jdk1.6.0_45
