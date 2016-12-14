@@ -1,3 +1,12 @@
+readonly HTTP_USER='usommerl'
+
+ask_http_password() {
+  if [ -z "$HTTP_PASS" ]; then
+    printf 'password: ' && read -s HTTP_PASS && printf "\e[0K\r"
+    export HTTP_PASS
+  fi
+}
+
 __basename_to_upper() {
   echo "$(basename $1 | tr '[:lower:]' '[:upper:]')"
 }
@@ -52,6 +61,7 @@ __reload_environment() {
   unset WORKSPACE
   case "$(__project)" in
     hww ) source $AMOS_NAT/config/hww.amosrc;;
+    transtor ) source $AMOS_NAT/ci_support/set_env.sh; unset RAILS_ENV;;
     * ) source $AMOS_NAT/ci_support/set_env.sh;;
   esac
 }
@@ -181,10 +191,8 @@ __jira_transition_command() {
 jira_transition() {
   local issue="$1"
   local transition_id="$2"
-  local username='usommerl'
-  local password=''
-  printf 'password: ' && read -s password && printf "\n"
-  eval "$(__jira_transition_command "$issue" "$transition_id" "$username" "$password")"
+  ask_http_password
+  eval "$(__jira_transition_command "$issue" "$transition_id" "$HTTP_USER" "$HTTP_PASS")"
 }
 
 __trigger_ci_command() {
@@ -198,14 +206,37 @@ __trigger_ci_command() {
 }
 
 trigger_ci() {
+  ask_http_password
   local job="$1"
   local issue="$2"
   local start="${3:-now}"
   local token="${4:-$job}"
-  local username='usommerl'
-  local password=''
-  printf 'password: ' && read -s password && printf "\n"
-  local jira_transition=$(__jira_transition_command "$issue" "51" "$username" "$password")
-  local trigger_ci=$(__trigger_ci_command "$job" "$issue" "$token" "$username" "$password")
+  local jira_transition=$(__jira_transition_command "$issue" "51" "$HTTP_USER" "$HTTP_PASS")
+  local trigger_ci=$(__trigger_ci_command "$job" "$issue" "$token" "$HTTP_USER" "$HTTP_PASS")
   echo "$jira_transition; $trigger_ci" | at $start
+}
+
+__datediff() {
+  local d1=$(date -d "$1" +%s)
+  local d2=$(date -d "$2" +%s)
+  local factor="$3"
+  local result="$(printf '%s\n' "($d1 - $d2) / $factor" | bc -l)"
+  printf '%s' "$result"
+}
+
+build_queue() {
+  ask_http_password
+  local url='http://movex-ci.osp-dd.de/queue/api/json'
+  local json=$(curl -s -X POST -u "$HTTP_USER:$HTTP_PASS" $url)
+  local jmespath="items[].join(', ',[to_string(actions[0].parameters[0].value), \
+                                     to_string(task.name),                      \
+                                     to_string(actions[1].causes[0].userName),  \
+                                     to_string(inQueueSince)                    \
+                                    ])"
+  local json_projection="$(echo "$json" | jp "$jmespath")"
+  while IFS=, read ticket pipeline name timestamp; do
+    local seconds="$(printf '%.0f' "$(printf '%.0f / 1000\n' "$timestamp" | bc -l)")"
+    local hours_in_queue="$(printf '%.2f' "$(__datediff 'now' "$(date -u -d @"$seconds")" 3600)")"
+    printf "%-12s %-15s %-20s %11s hours\n" "$ticket" "$pipeline" "$name" "$hours_in_queue"
+  done <<<"$(echo "$json_projection" | tr -d '["]' | sed -e '/^\s*$/d' -e 's/^ *//' -e 's/ *, */,/')"
 }
