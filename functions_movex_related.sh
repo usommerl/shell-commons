@@ -1,8 +1,15 @@
 readonly HTTP_USER='usommerl'
 
+__check_http_credentials() {
+  local url="${1:-http://jira.osp-dd.de}"
+  echo "$(curl -s -o /dev/null -w '%{http_code}' -u "$HTTP_USER:$HTTP_PASS" "$url")"
+}
+
 ask_http_password() {
   if [ -z "$HTTP_PASS" ]; then
-    printf 'password: ' && read -s HTTP_PASS && printf "\e[0K\r"
+    while [ "$(__check_http_credentials)" == '401' ]; do
+      printf 'password: ' && read -s HTTP_PASS && printf "\e[0K\r"
+    done
     export HTTP_PASS
   fi
 }
@@ -226,7 +233,7 @@ __datediff() {
 
 build_queue() {
   ask_http_password
-  local url='http://movex-ci.osp-dd.de/queue/api/json'
+  local url='http://movex-ci.osp-dd.de/queue/api/json?'
   local json=$(curl -s -X POST -u "$HTTP_USER:$HTTP_PASS" $url)
   local jmespath="items[].join(', ',[to_string(actions[0].parameters[0].value), \
                                      to_string(task.name),                      \
