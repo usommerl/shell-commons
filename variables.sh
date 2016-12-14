@@ -14,7 +14,7 @@ export JAVA_HOME=/opt/jdk1.6.0_45
 eval $(dircolors $HOME/.dir_colors 2>/dev/null)
 
 # osp
-export CI_REPORTS=/tmp
+export CI_REPORTS=/tmp/ci_reports
 export CI_CAPTURE=off
 
 # vim: set filetype=sh:
