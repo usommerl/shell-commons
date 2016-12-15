@@ -231,19 +231,23 @@ __datediff() {
   printf '%s' "$result"
 }
 
+__build_queue_csv() {
+  local url='http://movex-ci.osp-dd.de/queue/api/json'
+  local json="$(curl -s -X POST -u "$HTTP_USER:$HTTP_PASS" "$url")"
+  local jmespath="join(';', items[].join(',', [to_string(actions[0].parameters[0].value), \
+                                               to_string(task.name),                      \
+                                               to_string(actions[1].causes[0].userName),  \
+                                               to_string(inQueueSince)                    \
+                                              ]))"
+  echo "$(echo "$json" | jp -u "$jmespath" | sed -e 's/;/\n/g')"
+}
+
 build_queue() {
   ask_http_password
-  local url='http://movex-ci.osp-dd.de/queue/api/json?'
-  local json=$(curl -s -X POST -u "$HTTP_USER:$HTTP_PASS" $url)
-  local jmespath="items[].join(', ',[to_string(actions[0].parameters[0].value), \
-                                     to_string(task.name),                      \
-                                     to_string(actions[1].causes[0].userName),  \
-                                     to_string(inQueueSince)                    \
-                                    ])"
-  local json_projection="$(echo "$json" | jp "$jmespath")"
+  local csv="$(__build_queue_csv)"
   while IFS=, read ticket pipeline name timestamp; do
     local seconds="$(printf '%.0f' "$(printf '%.0f / 1000\n' "$timestamp" | bc -l)")"
     local hours_in_queue="$(printf '%.2f' "$(__datediff 'now' "$(date -u -d @"$seconds")" 3600)")"
     printf "%-35s %-35s %-35s %11s hours\n" "$ticket" "$pipeline" "$name" "$hours_in_queue"
-  done <<<"$(echo "$json_projection" | tr -d '["]' | sed -e '/^\s*$/d' -e 's/^ *//' -e 's/ *, */,/')"
+  done <<<"$(echo "$csv")"
 }
