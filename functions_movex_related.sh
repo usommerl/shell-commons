@@ -244,6 +244,6 @@ build_queue() {
   while IFS=, read ticket pipeline name timestamp; do
     local seconds="$(printf '%.0f' "$(printf '%.0f / 1000\n' "$timestamp" | bc -l)")"
     local hours_in_queue="$(printf '%.2f' "$(__datediff 'now' "$(date -u -d @"$seconds")" 3600)")"
-    printf "%-12s %-15s %-20s %11s hours\n" "$ticket" "$pipeline" "$name" "$hours_in_queue"
+    printf "%-35s %-35s %-35s %11s hours\n" "$ticket" "$pipeline" "$name" "$hours_in_queue"
   done <<<"$(echo "$json_projection" | tr -d '["]' | sed -e '/^\s*$/d' -e 's/^ *//' -e 's/ *, */,/')"
 }
