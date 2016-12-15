@@ -233,12 +233,13 @@ __datediff() {
 __build_queue_csv() {
   local url='http://movex-ci.osp-dd.de/queue/api/json'
   local json="$(curl -s -X POST -u "$HTTP_USER:$HTTP_PASS" "$url")"
-  local jmespath="join(';', items[].join(',', [to_string(actions[0].parameters[0].value), \
-                                               to_string(task.name),                      \
-                                               to_string(actions[1].causes[0].userName),  \
-                                               to_string(inQueueSince)                    \
-                                              ]))"
-  echo "$(echo "$json" | jp -u "$jmespath" | sed -e 's/;/\n/g')"
+  local n='`"\n"`'
+  local jmespath="join($n, items[].join(',', [to_string(actions[0].parameters[0].value), \
+                                              to_string(task.name),                      \
+                                              to_string(actions[1].causes[0].userName),  \
+                                              to_string(inQueueSince)                    \
+                                             ]))"
+  echo "$(echo "$json" | jp -u "$jmespath")"
 }
 
 build_queue() {
