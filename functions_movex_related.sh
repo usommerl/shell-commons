@@ -150,8 +150,7 @@ generate_configs() {
   local arg=$(__generate_configs_arg)
   echo "* generate_configs.rb $arg"
   __alter_dbuser
-  cd $AMOS_NAT/config
-  generate_configs.rb $arg
+  cd $AMOS_NAT/config && ruby generate_configs.rb $arg
   git checkout $vm_properties $default_properties
   cd $AMOS_NAT
 }
