@@ -176,10 +176,8 @@ dp_test_environment() {
 }
 
 create_branch() {
-  printf "Insert JIRA password: "
-  read -s JIRA_PASSWORD
-  printf "\n"
-  ruby $AMOS_COMMON/ci_support/create_branch.rb -j usommerl -p $JIRA_PASSWORD $@
+  ask_http_password
+  ruby $AMOS_COMMON/ci_support/create_branch.rb -j usommerl -p $HTTP_PASS $@
 }
 
 __jira_transition_command() {
