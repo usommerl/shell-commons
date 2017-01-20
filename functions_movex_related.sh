@@ -78,7 +78,7 @@ __make_project() {
   case "$(__project)" in
     transtor|russia ) make_cmd='ci_support/ci_make.sh';;
   esac
-  cd "$AMOS_NAT" && time "$make_cmd"
+  cd "$AMOS_NAT" && time $make_cmd
 }
 
 __property_files() {
