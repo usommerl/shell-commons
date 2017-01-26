@@ -234,6 +234,7 @@ __build_queue_csv() {
   local jmespath="join($n, items[].join(',', [to_string(actions[0].parameters[0].value), \
                                               to_string(task.name),                      \
                                               to_string(actions[1].causes[0].userName),  \
+                                              to_string(why),                            \
                                               to_string(inQueueSince)                    \
                                              ]))"
   echo "$(echo "$json" | jp -u "$jmespath")"
@@ -242,9 +243,9 @@ __build_queue_csv() {
 build_queue() {
   ask_http_password
   local csv="$(__build_queue_csv)"
-  while IFS=, read ticket pipeline name timestamp; do
+  while IFS=',' read ticket pipeline name why timestamp; do
     local seconds="$(printf '%.0f' "$(printf '%.0f / 1000\n' "$timestamp" | bc -l)")"
-    local hours_in_queue="$(printf '%.2f' "$(__datediff 'now' "$(date -u -d @"$seconds")" 3600)")"
-    printf "%-35s %-35s %-35s %11s hours\n" "$ticket" "$pipeline" "$name" "$hours_in_queue"
+    local hours_in_queue="$(printf '%.1f' "$(__datediff 'now' "$(date -u -d @"$seconds")" 3600)")"
+    printf "%5s  %-35s %-35s %-25s %-35s\n" "$hours_in_queue" "$ticket" "$pipeline" "$name" "$why"
   done <<<"$(echo "$csv")"
 }
