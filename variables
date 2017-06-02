@@ -11,4 +11,6 @@ export TERM=rxvt-unicode-256color
 export GOPATH=$HOME/playground/go_workspace
 export PATH="$DART_SDK/bin/:$RUBY_GEM_EXECUTABLES:$GOPATH/bin:$HOME/.cargo/bin:$HOME/.local/bin:$PATH"
 
+unset GIT_EDITOR
+
 # vim: set filetype=sh:
