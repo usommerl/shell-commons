@@ -20,9 +20,9 @@ function _onlyHiddenFilter() {
 
 function _directoryFilter() { egrep $1 --color=never '^d'; }
 
-function ldir() { _listFilterBase $1 | _directoryFilter; } 
+function ldir() { _listFilterBase $1 | _directoryFilter; }
 
-function lldir() { _listFilterBase $1 '-A' | _directoryFilter; } 
+function lldir() { _listFilterBase $1 '-A' | _directoryFilter; }
 
 function lhdir { lldir $1 | _onlyHiddenFilter; }
 

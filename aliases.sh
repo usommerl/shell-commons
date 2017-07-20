@@ -14,7 +14,8 @@ alias du='du -c -h'
 alias mkdir='mkdir -p -v'
 alias ping='ping -c 5'
 alias ..='cd ..'
-alias h='history'
+alias hi='HISTTIMEFORMAT="%d.%m.%Y %T  ";history'
+alias watch='watch --color'
 alias nvlc='nvlc --no-color'
 alias vim='vim --servername vim'
 
@@ -32,9 +33,8 @@ alias vpnc-disconnect='sudo vpnc-disconnect'
 # shortcuts
 alias vbm='VBoxManage'
 alias g="git" # further git aliases in gitconfig
+alias h="hg"
 alias lswifi="nmcli -f in-use,signal,ssid,bars,mode,security dev wifi | sort -n -k 1.3"
-
-
 alias ext-ip='curl icanhazip.com'
 
 alias luatexfonts='cat ~/.texlive/texmf-var/luatex-cache/generic/names/otfl-names.lua | grep familyname | cut -d "\"" -f 4 | sort | uniq'
