@@ -17,7 +17,6 @@ alias ..='cd ..'
 alias hi='HISTTIMEFORMAT="%d.%m.%Y %T  ";history'
 alias watch='watch --color'
 alias nvlc='nvlc --no-color'
-alias vim='vim --servername vim'
 
 # ls
 alias ls='ls -lhF --color=auto --time-style=long-iso'
@@ -38,5 +37,7 @@ alias lswifi="nmcli -f in-use,signal,ssid,bars,mode,security dev wifi | sort -n 
 alias ext-ip='curl icanhazip.com'
 
 alias luatexfonts='cat ~/.texlive/texmf-var/luatex-cache/generic/names/otfl-names.lua | grep familyname | cut -d "\"" -f 4 | sort | uniq'
+alias vim='nvim'
+alias vi='nvim'
 
 # vim: set filetype=sh:
