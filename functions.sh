@@ -34,7 +34,7 @@ function lhf() { llf $1 | _onlyHiddenFilter; }
 
 function lh() { _listFilterBase $1 '-A' | _onlyHiddenFilter; }
 
-function lz() { du -ahL -d 1 $1 2>/dev/null | sort -h; }
+function lz() { du -xahL -d 1 $1 2>/dev/null | sort -h; }
 
 function rtmpSniffEnvironment() {
    local setup='setup'
