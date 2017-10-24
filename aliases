@@ -16,7 +16,8 @@ alias ping='ping -c 5'
 alias ..='cd ..'
 alias h='history'
 alias nvlc='nvlc --no-color'
-alias vim='vim --servername vim'
+alias vi='nvim'
+alias vim='nvim'
 
 # ls
 alias ls='ls -lhF --color=auto --time-style=long-iso'
