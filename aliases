@@ -33,6 +33,8 @@ alias vpnc-disconnect='sudo vpnc-disconnect'
 # shortcuts
 alias vbm='VBoxManage'
 alias g="git" # further git aliases in gitconfig
+alias vi="nvim"
+alias vim="nvim"
 alias lswifi="nmcli -f in-use,signal,ssid,bars,mode,security dev wifi | sort -n -k 1.3"
 
 
