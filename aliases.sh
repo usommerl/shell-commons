@@ -25,7 +25,8 @@ alias ll='ls -HA --group-directories-first'
 alias lt='ls -HAtr'
 
 # require root privileges
-alias docker='sudo docker'
+alias d='sudo docker'
+alias c='sudo docker-compose'
 alias vpnc='sudo vpnc'
 alias vpnc-disconnect='sudo vpnc-disconnect'
 
