@@ -36,6 +36,8 @@ alias g="git" # further git aliases in gitconfig
 alias h="hg"
 alias lswifi="nmcli -f in-use,signal,ssid,bars,mode,security dev wifi | sort -n -k 1.3"
 alias ext-ip='curl icanhazip.com'
+alias mtr='mtr --curses'
+alias jsonPager='jq -C "." | less -r'
 
 alias luatexfonts='cat ~/.texlive/texmf-var/luatex-cache/generic/names/otfl-names.lua | grep familyname | cut -d "\"" -f 4 | sort | uniq'
 alias vim='nvim'
