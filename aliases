@@ -26,11 +26,12 @@ alias ll='ls -HA --group-directories-first'
 alias lt='ls -HAtr'
 
 # require root privileges
-alias docker='sudo docker'
 alias vpnc='sudo vpnc'
 alias vpnc-disconnect='sudo vpnc-disconnect'
 
 # shortcuts
+alias d='sudo docker'
+alias c='sudo docker-compose'
 alias vbm='VBoxManage'
 alias g="git" # further git aliases in gitconfig
 alias vi="nvim"
