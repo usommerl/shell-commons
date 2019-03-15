@@ -37,8 +37,8 @@ gitignoreTemplate() {
   fi
 }
 
-_setColorscheme() {
-  echo "URxvt.cursorColor: $1\\n*background: $2\\n*foreground: $3" | xrdb -merge
+__setColorscheme() {
+  echo -e "URxvt.cursorColor: $1\n*background: $2\n*foreground: $3" | xrdb -merge
   killall -s HUP awesome
 }
 
@@ -47,10 +47,10 @@ colorscheme() {
    local dark='dark'
    case $1 in
     $light )
-        _setColorscheme "9" "#FFFFFF" "#000000"
+        __setColorscheme "9" "#FFFFFF" "#000000"
         ;;
     $dark )
-        _setColorscheme "11" "#000000" "#babdb6"
+        __setColorscheme "11" "#000000" "#babdb6"
         ;;
     *)
         echo "Usage: $0 <$light|$dark>"
