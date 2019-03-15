@@ -14,10 +14,9 @@ alias du='du -c -h'
 alias mkdir='mkdir -p -v'
 alias ping='ping -c 5'
 alias ..='cd ..'
-alias h='history'
+alias hi='HISTTIMEFORMAT="%d.%m.%Y %T  ";history'
+alias watch='watch --color'
 alias nvlc='nvlc --no-color'
-alias vi='nvim'
-alias vim='nvim'
 
 # ls
 alias ls='ls -lhF --color=auto --time-style=long-iso'
@@ -30,15 +29,22 @@ alias vpnc='sudo vpnc'
 alias vpnc-disconnect='sudo vpnc-disconnect'
 
 # shortcuts
-alias d='sudo docker'
-alias c='sudo docker-compose'
+alias g="git"
+alias d='docker'
+alias c='docker-compose'
+alias h="hg"
+alias v='nvim'
+alias vi='nvim'
+alias vim='nvim'
 alias vbm='VBoxManage'
-alias g="git" # further git aliases in gitconfig
 alias lswifi="nmcli -f in-use,signal,ssid,bars,mode,security dev wifi | sort -n -k 1.3"
-
-
 alias ext-ip='curl icanhazip.com'
+alias mtr='mtr --curses'
+alias jsonPager='jq "." | nvim -c "set ft=json" -'
 
 alias luatexfonts='cat ~/.texlive/texmf-var/luatex-cache/generic/names/otfl-names.lua | grep familyname | cut -d "\"" -f 4 | sort | uniq'
 
-# vim: set filetype=sh:
+# Host specific overrides
+FILENAME="$(dirname $BASH_SOURCE)/$(echo $(basename $BASH_SOURCE) | sed "s/\.sh/_$(hostname).sh/g")"
+[ -f "$FILENAME" ] && source "$FILENAME"
+unset FILENAME
