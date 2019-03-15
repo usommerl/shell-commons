@@ -56,3 +56,8 @@ colorscheme() {
         echo "Usage: $0 <$light|$dark>"
    esac
 }
+
+# Host specific overrides
+FILENAME="$(dirname $BASH_SOURCE)/$(echo $(basename $BASH_SOURCE) | sed "s/\.sh/_$(hostname).sh/g")"
+[ -f "$FILENAME" ] && source "$FILENAME"
+unset FILENAME
