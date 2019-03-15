@@ -42,7 +42,7 @@ _setColorscheme() {
   killall -s HUP awesome
 }
 
-function colorscheme() {
+colorscheme() {
    local light='light'
    local dark='dark'
    case $1 in
