@@ -25,8 +25,6 @@ alias ll='ls -HA --group-directories-first'
 alias lt='ls -HAtr'
 
 # require root privileges
-alias d='docker'
-alias c='docker-compose'
 alias vpnc='sudo vpnc'
 alias vpnc-disconnect='sudo vpnc-disconnect'
 
@@ -45,7 +43,5 @@ alias mtr='mtr --curses'
 alias jsonPager='jq "." | nvim -c "set ft=json" -'
 
 alias luatexfonts='cat ~/.texlive/texmf-var/luatex-cache/generic/names/otfl-names.lua | grep familyname | cut -d "\"" -f 4 | sort | uniq'
-alias vim='nvim'
-alias vi='nvim'
 
 # vim: set filetype=sh:
