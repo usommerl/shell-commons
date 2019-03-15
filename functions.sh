@@ -1,10 +1,10 @@
 _listFilterBase() {
-    ls -lhHF $2 --color=always --group-directories-first \
-                --time-style=long-iso $1 | egrep -v '^total'
+  ls -lhHF $2 --color=always --group-directories-first \
+              --time-style=long-iso $1 | egrep -v '^total'
 }
 
 _onlyHiddenFilter() {
-    egrep '.+[[:space:]]([[:cntrl:]]\[([[:digit:]]{2};)*[[:digit:]]{2}m)?\..+'
+  egrep '.+[[:space:]]([[:cntrl:]]\[([[:digit:]]{2};)*[[:digit:]]{2}m)?\..+'
 }
 
 _directoryFilter() { egrep $1 --color=never '^d'; }
