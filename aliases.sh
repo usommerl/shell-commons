@@ -44,4 +44,7 @@ alias jsonPager='jq "." | nvim -c "set ft=json" -'
 
 alias luatexfonts='cat ~/.texlive/texmf-var/luatex-cache/generic/names/otfl-names.lua | grep familyname | cut -d "\"" -f 4 | sort | uniq'
 
-# vim: set filetype=sh:
+# Host specific overrides
+FILENAME="$(dirname $BASH_SOURCE)/$(echo $(basename $BASH_SOURCE) | sed "s/\.sh/_$(hostname).sh/g")"
+[ -f "$FILENAME" ] && source "$FILENAME"
+unset FILENAME
