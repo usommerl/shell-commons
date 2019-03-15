@@ -31,9 +31,14 @@ alias vpnc='sudo vpnc'
 alias vpnc-disconnect='sudo vpnc-disconnect'
 
 # shortcuts
-alias vbm='VBoxManage'
-alias g="git" # further git aliases in gitconfig
+alias g="git"
+alias d='docker'
+alias c='docker-compose'
 alias h="hg"
+alias v='nvim'
+alias vi='nvim'
+alias vim='nvim'
+alias vbm='VBoxManage'
 alias lswifi="nmcli -f in-use,signal,ssid,bars,mode,security dev wifi | sort -n -k 1.3"
 alias ext-ip='curl icanhazip.com'
 alias mtr='mtr --curses'
