@@ -57,7 +57,10 @@ colorscheme() {
    esac
 }
 
-# Host specific overrides
-FILENAME="$(dirname $BASH_SOURCE)/$(echo $(basename $BASH_SOURCE) | sed "s/\.sh/_$(hostname).sh/g")"
-[ -f "$FILENAME" ] && source "$FILENAME"
-unset FILENAME
+# Source host specific overrides
+CURRENT_FILE="${BASH_SOURCE[0]:-${(%):-%x}}"
+BASENAME="$(echo $(basename $CURRENT_FILE) | sed "s/\.sh/_$(hostname).sh/g")"
+DIRNAME="$(dirname $CURRENT_FILE)"
+OVERRIDE_FILE="$DIRNAME/$BASENAME"
+[ -f "$OVERRIDE_FILE" ] && source "$OVERRIDE_FILE"
+unset BASENAME DIRNAME CURRENT_FILE OVERRIDE_FILE
