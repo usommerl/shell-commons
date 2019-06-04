@@ -57,6 +57,14 @@ colorscheme() {
    esac
 }
 
+cat() {
+  if command -v bat >/dev/null 2>&1; then
+    bat "$@"
+  else
+    command cat "$@"
+  fi
+}
+
 # Source host specific overrides
 CURRENT_FILE="${BASH_SOURCE[0]:-${(%):-%x}}"
 BASENAME="$(echo $(basename $CURRENT_FILE) | sed "s/\.sh/_$(hostname).sh/g")"
