@@ -32,6 +32,7 @@ alias vpnc-disconnect='sudo vpnc-disconnect'
 alias g="git"
 alias d='docker'
 alias c='docker-compose'
+alias k='kubectl'
 alias h="hg"
 alias v='nvim'
 alias vi='nvim'
