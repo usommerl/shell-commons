@@ -53,3 +53,24 @@ rtmpSniffEnvironment() {
    esac
 }
 
+bctl() {
+  case $1 in
+  off)
+    bluetoothctl -- power off
+    ;;
+  btc22)
+    bluetoothctl -- power off
+    bluetoothctl -- power on
+    bluetoothctl -- connect 70:B3:D5:94:A3:32
+    ;;
+  ueboom2)
+    bluetoothctl -- power off
+    bluetoothctl -- power on
+    bluetoothctl -- connect 88:C6:26:C5:52:9B
+    ;;
+  *)
+    echo "Unknown argument: $1"
+    ;;
+  esac
+}
+
