@@ -57,6 +57,30 @@ colorscheme() {
    esac
 }
 
+fingerprints() {
+  ssh-keygen -E md5 -lf <(ssh-keyscan "$1" 2>/dev/null)
+}
+
+checkFingerprint() {
+ export GREP_COLORS="mt=01;32"
+ fingerprints "$1" | grep "$2" && echo -e "\033[1;32mVALID\033[0m" || echo -e "\033[1;31mINVALID\033[0m"
+ unset GREP_COLORS
+}
+
+string2Hex() {
+  echo -n "$1" | od -A n -t x1 -w"${2:4096}"| sed 's/ *//g'
+}
+
+hex2string () {
+  local i=0
+  while [ $i -lt ${#1} ];
+  do
+    echo -en "\x"${1:$i:2}
+    let "i += 2"
+  done
+  echo
+}
+
 cat() {
   if command -v bat >/dev/null 2>&1; then
     bat "$@"
