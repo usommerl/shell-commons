@@ -67,12 +67,12 @@ checkFingerprint() {
  unset GREP_COLORS
 }
 
-string2Hex() {
-  echo -n "$1" | od -A n -t x1 -w"${2:4096}"| sed 's/ *//g'
-}
-
 unixTimestamp2Date() {
   date -Is -d @"${1:0:10}"
+}
+
+string2Hex() {
+  echo -n "$1" | od -A n -t x1 -w"${2:4096}"| sed 's/ *//g'
 }
 
 hex2string () {
