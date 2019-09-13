@@ -71,6 +71,10 @@ unixTimestamp2Date() {
   date -Is -d @"${1:0:10}"
 }
 
+jwt() {
+  cut -d"." -f1,2 <<< $1 | sed 's/\./\n/g' | base64 --decode 2>/dev/null | jq
+}
+
 string2Hex() {
   echo -n "$1" | od -A n -t x1 -w"${2:4096}"| sed 's/ *//g'
 }
