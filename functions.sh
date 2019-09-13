@@ -71,6 +71,10 @@ string2Hex() {
   echo -n "$1" | od -A n -t x1 -w"${2:4096}"| sed 's/ *//g'
 }
 
+unixTimestamp2Date() {
+  date -Is -d @"${1:0:10}"
+}
+
 hex2string () {
   local i=0
   while [ $i -lt ${#1} ];
