@@ -29,6 +29,7 @@ alias vpnc='sudo vpnc'
 alias vpnc-disconnect='sudo vpnc-disconnect'
 
 # shortcuts
+alias ,.="cd -"
 alias g="git"
 alias d='docker'
 alias c='docker-compose'
