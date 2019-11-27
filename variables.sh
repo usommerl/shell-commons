@@ -8,6 +8,7 @@ export PATH="${PATH}:$HOME/.local/bin"
 export PATH="${PATH}:$HOME/.cargo/bin"
 
 export FZF_DEFAULT_OPTS='--height 75% --multi --reverse --bind ctrl-f:page-down,ctrl-b:page-up'
+export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -100'"
 
 if command -v fd >/dev/null; then
   export FZF_DEFAULT_COMMAND='fd -H --type f --color=never'
