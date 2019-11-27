@@ -7,6 +7,14 @@ export TERM=rxvt-256color
 export PATH="${PATH}:$HOME/.local/bin"
 export PATH="${PATH}:$HOME/.cargo/bin"
 
+export FZF_DEFAULT_OPTS='--height 75% --multi --reverse --bind ctrl-f:page-down,ctrl-b:page-up'
+
+if command -v fd >/dev/null; then
+  export FZF_DEFAULT_COMMAND='fd -H --type f --color=never'
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_ALT_C_COMMAND='fd -H --type d . --color=never'
+fi
+
 # Source host specific overrides
 CURRENT_FILE="${BASH_SOURCE[0]:-${(%):-%x}}"
 BASENAME="$(echo $(basename $CURRENT_FILE) | sed "s/\.sh/_$(hostname).sh/g")"
