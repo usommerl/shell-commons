@@ -16,6 +16,10 @@ if command -v fd >/dev/null; then
   export FZF_ALT_C_COMMAND='fd -H --type d . --color=never'
 fi
 
+if command -v bat >/dev/null; then
+  export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range :500 {}'"
+fi
+
 # Source host specific overrides
 CURRENT_FILE="${BASH_SOURCE[0]:-${(%):-%x}}"
 BASENAME="$(echo $(basename $CURRENT_FILE) | sed "s/\.sh/_$(hostname).sh/g")"
