@@ -3,9 +3,11 @@ export EDITOR=nvim
 export LESS=-iR
 export TEXMFHOME=$HOME/.texmf
 export MPD_HOST=/$HOME/.mpd/socket
+export MINICOM='-c on'
+
 export PATH="${PATH}:$HOME/.local/bin"
 export PATH="${PATH}:$HOME/.cargo/bin"
-export MINICOM='-c on'
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 export FZF_DEFAULT_OPTS='--height 75% --multi --reverse --bind ctrl-f:page-down,ctrl-b:page-up'
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -100'"
