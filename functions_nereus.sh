@@ -21,4 +21,7 @@ consumerOffsets() {
   done <<< "$groups"
 }
 
-export -f consumerOffsets
+if [ -n "$BASH_VERSION" ]; then
+  export -f consumerOffsets
+fi
+
