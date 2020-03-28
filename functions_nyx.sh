@@ -68,6 +68,11 @@ bctl() {
     bluetoothctl -- power on
     bluetoothctl -- connect 88:C6:26:C5:52:9B
     ;;
+  aiaiai)
+    bluetoothctl -- power off
+    bluetoothctl -- power on
+    bluetoothctl -- connect 00:08:E0:73:07:70
+    ;;
   *)
     echo "Unknown argument: $1"
     ;;
