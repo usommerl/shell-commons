@@ -6,6 +6,7 @@ export MPD_HOST=/$HOME/.mpd/socket
 export MINICOM='-c on'
 
 export PATH="${PATH}:$HOME/.local/bin"
+export PATH="${PATH}:$HOME/.local/share/coursier/bin"
 export PATH="${PATH}:$HOME/.cargo/bin"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
