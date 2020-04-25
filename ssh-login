@@ -9,7 +9,7 @@ function ssh_clean {
     local f1="$d/${n}_tmp"
 
     if [ -f $f0 ]; then
-        cat /dev/null > $f1
+        : > $f1
 
         while read host line; do
             if [ $host != "localhost" ]; then
