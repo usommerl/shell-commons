@@ -66,6 +66,6 @@ else
 fi
 
 # Clean localhost entry in the known host file
-ssh_clean
+#ssh_clean
 
 # vim: set filetype=sh:
