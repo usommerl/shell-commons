@@ -14,9 +14,9 @@ export FZF_DEFAULT_OPTS='--height 75% --multi --reverse --bind ctrl-f:page-down,
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -100'"
 
 if command -v fd >/dev/null; then
-  export FZF_DEFAULT_COMMAND='fd -H --type f --color=never'
+  export FZF_DEFAULT_COMMAND='fd -H -I --type f --color=never'
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-  export FZF_ALT_C_COMMAND='fd -H --type d . --color=never'
+  export FZF_ALT_C_COMMAND='fd -H -I --exclude ".git" --exclude "target" --exclude ".bloop" --exclude ".metals" --type d . --color=never'
 fi
 
 if command -v bat >/dev/null; then
