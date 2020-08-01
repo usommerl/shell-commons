@@ -36,23 +36,6 @@ flac2mp3() {
   unset fileList
 }
 
-rtmpSniffEnvironment() {
-   local setup='setup'
-   local teardown='teardown'
-
-   case $1 in
-    $setup )
-        sudo iptables -t nat -A OUTPUT -p tcp --dport 1935 -j REDIRECT
-        rtmpsrv
-        ;;
-    $teardown )
-        sudo iptables -t nat -D OUTPUT -p tcp --dport 1935 -j REDIRECT
-        ;;
-    *)
-        echo "Usage: $0 <$setup|$teardown>"
-   esac
-}
-
 bctl() {
   case $1 in
   off)
