@@ -1,14 +1,3 @@
-fail() {
-  echo -e "\e[1;31m[fail]\e[0m $@"
-  kill -INT $$ # kills only the function stack and not the entire shell
-}
-
-requires() {
-  for arg in $*; do
-      command -v $arg &> /dev/null || { fail "The command ‘$arg’ is required."; }
-  done
-}
-
 bctl() {
   case $1 in
   off)
@@ -34,4 +23,3 @@ bctl() {
     ;;
   esac
 }
-
