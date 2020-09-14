@@ -18,6 +18,9 @@ bctl() {
   aiaiai)
     __bctl_connect 00:08:E0:73:07:70
     ;;
+  nubert)
+    __bctl_connect CC:90:93:12:6D:C8
+     ;;
   *)
     echo "Unknown argument: $1"
     ;;
