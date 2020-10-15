@@ -34,6 +34,7 @@ alias g="git"
 alias d='docker'
 alias c='docker-compose'
 alias k='kubectl'
+alias sbt='sbtn'
 alias h="hg"
 alias v='nvim'
 alias fe='fzf_find_edit'
