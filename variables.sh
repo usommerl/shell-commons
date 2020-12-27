@@ -1,6 +1,7 @@
 export MANPAGER='nvim -c "set ft=man" -'
 export EDITOR=nvim
 export LESS=-iR
+export DELTA_PAGER='less --tilde'
 export TEXMFHOME=$HOME/.texmf
 export MPD_HOST=/$HOME/.mpd/socket
 export MINICOM='-c on'
